@@ -1,7 +1,7 @@
 
-# ALP Mission Card — Session 0 (GitHub Pages)
+# ALP Mission Card — Session 0 (GitHub Pages, Updated)
 
-This is a ready-to-publish GitHub Pages site containing the Session 0 Mission Card.
+This is a ready-to-publish GitHub Pages site containing the Session 0 Mission Card with two new bullet points added.
 
 ## Quick Start
 1. Create a new GitHub repository (e.g., `alp-mission-card`).
@@ -17,7 +17,7 @@ This is a ready-to-publish GitHub Pages site containing the Session 0 Mission Ca
 ```html
 <iframe src="https://YOUR_USERNAME.github.io/alp-mission-card/"
         width="420"
-        height="380"
+        height="400"
         style="border:none; overflow:hidden"
         scrolling="no"
         allowfullscreen>
