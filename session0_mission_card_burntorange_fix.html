@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Session 0 — Mission Card: Target of Transformation</title>
+  <style>
+    :root{
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --accent:#4f46e5;
+      --ring:rgba(79,70,229,.35);
+      --radius:16px;
+      --shadow:0 10px 25px rgba(15,23,42,.12), 0 2px 8px rgba(15,23,42,.06);
+      --navy:#001a33;
+      --orange:#e67e22;
+      --orange-light:#fdf3e6;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:var(--bg);
+      color:var(--text);
+      display:grid;
+      place-items:center;
+      padding:20px;
+    }
+    .wrap{display:grid; gap:16px; justify-items:center;}
+    .title{
+      font-size:1rem; letter-spacing:.02em; color:var(--muted);
+      text-align:center;
+    }
+    .flip-card{
+      width:min(420px, 95vw);
+      height: 360px;
+      perspective:1200px;
+    }
+    .flip-card-inner{
+      position:relative; width:100%; height:100%;
+      transition:transform .7s cubic-bezier(.2,.8,.2,1);
+      transform-style:preserve-3d;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      background: var(--card);
+      border:1px solid #e2e8f0;
+    }
+    .flip-card.is-flipped .flip-card-inner{ transform: rotateY(180deg); }
+    .side{
+      position:absolute; inset:0;
+      display:flex; flex-direction:column; justify-content:center; align-items:center;
+      padding:18px 18px;
+      border-radius:var(--radius);
+      backface-visibility:hidden; -webkit-backface-visibility:hidden;
+    }
+    .front{
+      background: var(--navy);
+      color: var(--orange);
+    }
+    .front h3, .front p, .front .hint{
+      color: var(--orange);
+    }
+    .front .btn{
+      background: var(--orange);
+      color: var(--navy);
+    }
+    .front .btn:focus{outline:3px solid var(--orange); outline-offset:3px}
+    .back{ 
+      transform: rotateY(180deg); 
+      overflow:auto; 
+      align-items:stretch; 
+      background: var(--orange-light); 
+      color: var(--text);
+      border-left: 6px solid var(--orange);
+    }
+    .back h3{margin:.2rem 0 .5rem 0; font-size:1.05rem; text-align:center; color: var(--navy)}
+    .back .btn{
+      background: var(--navy);
+      color: white;
+    }
+    .back .btn:focus{outline:3px solid var(--navy); outline-offset:3px}
+    .back .content{max-width: 92%; margin: 0 auto; text-align:left}
+    ul{margin:.4rem 0 0 1.1rem; padding:0}
+    li{margin:.25rem 0; line-height:1.3}
+    .hint{
+      font-size:.84rem; margin:.4rem 0 .6rem; text-align:center;
+    }
+    .btn{
+      margin-top:10px; border:0;
+      padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:600;
+      box-shadow:0 5px 14px var(--ring);
+      align-self:center;
+    }
+    @media (max-width: 360px) {
+      .flip-card{ height: 390px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .flip-card-inner{ transition:none }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="title">Session 0 — Mission Card</div>
+    <div class="flip-card" id="card" aria-live="polite" tabindex="0">
+      <div class="flip-card-inner" id="inner">
+        <section class="side front" aria-label="Front of mission card">
+          <h3>Target of Transformation (ToT)</h3>
+          <p>Create your finalized ToT and share it with your coach once complete.</p>
+          <p class="hint">Click the card or press Enter/Space to flip for details.</p>
+          <button class="btn" id="flip1" aria-controls="inner" aria-expanded="false">Flip for details</button>
+        </section>
+        <section class="side back" aria-label="Back of mission card">
+          <div class="content">
+            <h3>ToT — What to Include</h3>
+            <p class="hint" style="margin-top:0">Your ToT is your personal guide and decision filter throughout the program.</p>
+            <ul>
+              <li>A clear description of the shift you want to make in how you lead.</li>
+              <li>Specific behaviors you want to see more or less of.</li>
+              <li>The biggest barrier you anticipate.</li>
+              <li>The impact you aim to create as a result of this transformation.</li>
+            </ul>
+            <p class="hint">Format is your choice: video, audio, or written.</p>
+            <button class="btn" id="flip2" aria-controls="inner" aria-expanded="true">Flip back</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const card = document.getElementById('card');
+      const btn1 = document.getElementById('flip1');
+      const btn2 = document.getElementById('flip2');
+
+      function flip() {
+        card.classList.toggle('is-flipped');
+        const expanded = card.classList.contains('is-flipped');
+        btn1.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        btn2.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      }
+
+      card.addEventListener('click', function(e){
+        if(e.target.closest('button')) return;
+        flip();
+      });
+
+      card.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          flip();
+        }
+      });
+
+      btn1.addEventListener('click', function(e){ e.stopPropagation(); flip(); });
+      btn2.addEventListener('click', function(e){ e.stopPropagation(); flip(); });
+    })();
+  </script>
+</body>
+</html>
